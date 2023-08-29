@@ -14,7 +14,6 @@ async function get_product_brand() {
         return [] // 回傳空陣列表示發生錯誤或沒有品牌資料
     }
 }
-get_product_brand()
 
 // 新增品牌
 async function create_product_brand(brand_name) {
