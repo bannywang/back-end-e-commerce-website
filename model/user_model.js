@@ -89,7 +89,7 @@ async function get_user_data() {
     throw error; // 拋出錯誤以供呼叫者處理
   }
 }
-get_user_data()
+
 // 使用 user_id 尋找使用者資料
 async function use_id_get_user_data(id) {
   try {
