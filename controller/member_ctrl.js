@@ -82,7 +82,7 @@ async function forget_password(req, res) {
         if (!accountExist || accountExist.length === 0) {
             // 如果帳號不存在，或者不存在，返回兩個 false
             res.json({ account_exist: false, user_phone: false })
-            return
+            return false
         }
 
         // 帳號存在，檢查電話是否匹配
