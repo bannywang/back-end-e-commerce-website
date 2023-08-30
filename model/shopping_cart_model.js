@@ -124,7 +124,7 @@ async function create_shopping_cart(user_id, product_id, size_id, quantity) {
         return false
     }
 }
-// create_shopping_cart(9,1,1,5)
+// create_shopping_cart(1,1,1,5)
 
 // 異動購物車數量
 async function change_the_number_of_shopping_carts(user_id, shopping_cart_id, new_quantity) {
@@ -244,7 +244,7 @@ async function get_user_data_from_shopping_cart(user_id) {
         throw error
     }
 }
-// get_user_data_from_shopping_cart(8)
+// get_user_data_from_shopping_cart(1)
 
 // 使用 user_id 取得購物車 id
 async function get_user_shopping_cart_id(user_id) {
@@ -301,6 +301,7 @@ async function product_total_in_shopping_cart(user_id) {
         return 0 // 錯誤時回傳 0 元
     }
 }
+// product_total_in_shopping_cart(1)
 
 // 使用user_id 篩選已完成的訂單
 async function user_completed_order_list(user_id) {
@@ -417,11 +418,11 @@ async function checkout_shopping_cart(user_id, recipient_name, recipient_phone, 
             // 修改購物車狀態
             await change_shopping_cart_status(user_id, shopping_cart_id)
 
-            // 更新使用者的 purchase_CA，傳入 ph_id 參數
-            await purchase_history.update_user_CA(user_id, ph_id, sum)
+            // // 更新使用者的 purchase_CA，傳入 ph_id 參數
+            // await purchase_history.update_user_CA(user_id, ph_id, sum)
 
-            // 更新使用者等級
-            await purchase_history.update_user_grade(user_id)
+            // // 更新使用者等級
+            // await purchase_history.update_user_grade(user_id)
 
             // 更新商品库存
             const update_stock_success = await product.update_product_stock(product_id, size_id, quantity)
