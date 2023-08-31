@@ -82,12 +82,12 @@ async function forget_password(req, res) {
         if (!accountExist || accountExist.length === 0) {
             // 如果帳號不存在，或者不存在，返回兩個 false
             res.json({ account_exist: false, user_phone: false })
-            return false
+            return
         }
 
         // 帳號存在，檢查電話是否匹配
         if (accountExist[0].phone === user_index.phone) {
-            // 帳號和電話都匹配，返回兩個 true
+            automatic_mail.send_forget_password_mail(accountExist)
             res.json({ account_exist: true, user_phone: true })
         } else {
             // 電話不匹配，返回兩個 false
