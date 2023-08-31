@@ -1,4 +1,4 @@
-const { connection } = require('../data/connection_model')
+const { connection } = require('../model/connection_model')
 
 //! product_brand ----------------------------------------------------------------
 
@@ -14,7 +14,6 @@ async function get_product_brand() {
         return [] // 回傳空陣列表示發生錯誤或沒有品牌資料
     }
 }
-get_product_brand()
 
 // 新增品牌
 async function create_product_brand(brand_name) {
@@ -231,14 +230,22 @@ async function get_single_product_stock(product_id) {
         const query = `
             SELECT size_id, stock_quantity
             FROM product_stock
-            WHERE product_data_id = ?    
+            WHERE product_data_id = ? AND stock_quantity > 0
         `
 
         const [stock_data] = await connection.query(query, [product_id])
-        const result = stock_data.map((item) => ({
-            size: item.size_id,
-            stock: item.stock_quantity,
-        }))
+        const result = stock_data
+            .map((item) => {
+                if (item.stock_quantity > 0) {
+                    return {
+                        size: item.size_id,
+                        stock: item.stock_quantity,
+                    }
+                }
+                return null
+            })
+            .filter(Boolean)
+            .reverse() // 過濾掉為 null 的項目
         console.log('成功取得商品單尺寸庫存量！')
         console.log(result)
         return result
@@ -348,7 +355,6 @@ async function get_product_data() {
         console.error('無法獲取產品資料:', error)
     }
 }
-// get_product_data()
 
 // 使用類別 id 篩選產品 (man = 1 ， waman = 2 ， kids = 3)
 async function use_class_id_get_product(id) {

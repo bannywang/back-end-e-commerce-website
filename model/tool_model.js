@@ -1,4 +1,4 @@
-const { connection } = require('../data/connection_model')
+const { connection } = require('../model/connection_model')
 const jwt = require('jsonwebtoken') //JWT模組
 
 //! token -----------------------------
@@ -92,17 +92,18 @@ async function drop_table(table_name) {
 
 //! search -----------------------------
 
+//?
 // 產品模糊搜尋 (品牌名或產品名)
 async function vague_search_database(product_keyword) {
     try {
         const query = `
-            SELECT pd.id, pb.brand_name, pde.product_name, pde.price, pc.class
-            FROM product_data pd
-            JOIN product_brand pb ON pd.brand_id = pb.id
-            JOIN product_detail pde ON pd.detail_id = pde.id
-            JOIN product_class pc ON pd.class_id = pc.id
-            WHERE pb.brand_name LIKE ? OR pde.product_name LIKE ?
-        `
+      SELECT pd.id, pb.brand_name, pdd.product_name, pdd.price, pc.class, pd.product_data_status
+      FROM product_data pd
+      JOIN product_brand pb ON pd.brand_id = pb.id
+      JOIN product_detail pdd ON pd.detail_id = pdd.id
+      JOIN product_class pc ON pd.class_id = pc.id
+      WHERE (pb.brand_name LIKE ? OR pdd.product_name LIKE ?) AND pd.product_data_status = 1
+    `
 
         const [results] = await connection.query(query, [`%${product_keyword}%`, `%${product_keyword}%`])
 
