@@ -257,7 +257,7 @@ async function vague_search(req, res) {
     const vague_result = await tool.vague_search_database(index)
     try {
         if (!vague_result) {
-            res.json({ vague_result: 'not_found' })
+            res.json(false)
         } else {
             res.json(vague_result)
         }

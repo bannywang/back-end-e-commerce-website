@@ -92,7 +92,6 @@ async function drop_table(table_name) {
 
 //! search -----------------------------
 
-//?
 // 產品模糊搜尋 (品牌名或產品名)
 async function vague_search_database(product_keyword) {
     try {
@@ -105,6 +104,7 @@ async function vague_search_database(product_keyword) {
       WHERE (pb.brand_name LIKE ? OR pdd.product_name LIKE ?) AND pd.product_data_status = 1
     `
 
+        // 使用通配符（%）来进行模糊搜尋
         const [results] = await connection.query(query, [`%${product_keyword}%`, `%${product_keyword}%`])
 
         if (results.length === 0) {
