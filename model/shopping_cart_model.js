@@ -423,10 +423,10 @@ async function checkout_shopping_cart(user_id, recipient_name, recipient_phone, 
             // // 更新使用者等級
             // await purchase_history.update_user_grade(user_id);
 
-            // 更新商品库存
+            // 更新商品庫存
             const update_stock_success = await product.update_product_stock(product_id, size_id, quantity)
 
-            // 检查库存更新是否成功
+            // 檢查庫存更新是否成功
             if (!update_stock_success) {
                 console.error(`更新商品庫存失敗，結帳失敗 (購物車 ID: ${shopping_cart_id})`)
                 return false // 结账失败
